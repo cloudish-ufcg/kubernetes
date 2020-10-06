@@ -60,6 +60,7 @@ func (pl *DefaultPreemption) Name() string {
 
 // New initializes a new plugin and returns it.
 func New(_ runtime.Object, fh framework.FrameworkHandle) (framework.Plugin, error) {
+	klog.Infof("Initializing a new customized Default Preemption PostFilter Plugin...")
 	pl := DefaultPreemption{fh}
 	if utilfeature.DefaultFeatureGate.Enabled(kubefeatures.PodDisruptionBudget) {
 		// A hack to initialize pdbLister in sharedInformerFactory.

@@ -17,6 +17,8 @@ limitations under the License.
 package queuesort
 
 import (
+	"k8s.io/klog/v2"
+
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/kubernetes/pkg/api/v1/pod"
 	framework "k8s.io/kubernetes/pkg/scheduler/framework/v1alpha1"
@@ -47,5 +49,6 @@ func (pl *PrioritySort) Less(pInfo1, pInfo2 *framework.QueuedPodInfo) bool {
 
 // New initializes a new plugin and returns it.
 func New(_ runtime.Object, handle framework.FrameworkHandle) (framework.Plugin, error) {
+	klog.Infof("Initializing a new customized Priority Sort Plugin...")
 	return &PrioritySort{}, nil
 }

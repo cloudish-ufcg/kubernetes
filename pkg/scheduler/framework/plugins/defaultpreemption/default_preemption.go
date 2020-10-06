@@ -396,35 +396,42 @@ func pickOneNodeForPreemption(nodesToVictims map[string]*extenderv1.Victims) str
 			lenNodes2++
 		}
 	}
-	if lenNodes2 == 1 {
+	//if lenNodes2 == 1 {
+	//	return minNodes2[0]
+	//}
+
+	if lenNodes2 > 0 {
 		return minNodes2[0]
 	}
 
-	// There are a few nodes with same number of pods.
-	// Find the node that satisfies latest(earliestStartTime(all highest-priority pods on node))
-	latestStartTime := util.GetEarliestPodStartTime(nodesToVictims[minNodes2[0]])
-	if latestStartTime == nil {
-		// If the earliest start time of all pods on the 1st node is nil, just return it,
-		// which is not expected to happen.
-		klog.Errorf("earliestStartTime is nil for node %s. Should not reach here.", minNodes2[0])
-		return minNodes2[0]
-	}
-	nodeToReturn := minNodes2[0]
-	for i := 1; i < lenNodes2; i++ {
-		node := minNodes2[i]
-		// Get earliest start time of all pods on the current node.
-		earliestStartTimeOnNode := util.GetEarliestPodStartTime(nodesToVictims[node])
-		if earliestStartTimeOnNode == nil {
-			klog.Errorf("earliestStartTime is nil for node %s. Should not reach here.", node)
-			continue
-		}
-		if earliestStartTimeOnNode.After(latestStartTime.Time) {
-			latestStartTime = earliestStartTimeOnNode
-			nodeToReturn = node
-		}
-	}
+	//// There are a few nodes with same number of pods.
+	//// Find the node that satisfies latest(earliestStartTime(all highest-priority pods on node))
+	//latestStartTime := util.GetEarliestPodStartTime(nodesToVictims[minNodes2[0]])
+	//if latestStartTime == nil {
+	//	// If the earliest start time of all pods on the 1st node is nil, just return it,
+	//	// which is not expected to happen.
+	//	klog.Errorf("earliestStartTime is nil for node %s. Should not reach here.", minNodes2[0])
+	//	return minNodes2[0]
+	//}
+	//nodeToReturn := minNodes2[0]
+	//for i := 1; i < lenNodes2; i++ {
+	//	node := minNodes2[i]
+	//	// Get earliest start time of all pods on the current node.
+	//	earliestStartTimeOnNode := util.GetEarliestPodStartTime(nodesToVictims[node])
+	//	if earliestStartTimeOnNode == nil {
+	//		klog.Errorf("earliestStartTime is nil for node %s. Should not reach here.", node)
+	//		continue
+	//	}
+	//	if earliestStartTimeOnNode.After(latestStartTime.Time) {
+	//		latestStartTime = earliestStartTimeOnNode
+	//		nodeToReturn = node
+	//	}
+	//}
+	//
+	//return nodeToReturn
 
-	return nodeToReturn
+	return ""
+
 }
 
 // selectVictimsOnNode finds minimum set of pods on the given node that should

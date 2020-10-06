@@ -41,7 +41,8 @@ func (pl *PrioritySort) Name() string {
 func (pl *PrioritySort) Less(pInfo1, pInfo2 *framework.QueuedPodInfo) bool {
 	p1 := pod.GetPodPriority(pInfo1.Pod)
 	p2 := pod.GetPodPriority(pInfo2.Pod)
-	return (p1 > p2) || (p1 == p2 && pInfo1.Timestamp.Before(pInfo2.Timestamp))
+	//return (p1 > p2) || (p1 == p2 && pInfo1.Timestamp.Before(pInfo2.Timestamp))
+	return (p1 > p2)
 }
 
 // New initializes a new plugin and returns it.
